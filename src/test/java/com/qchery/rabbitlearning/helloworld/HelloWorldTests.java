@@ -1,6 +1,6 @@
 package com.qchery.rabbitlearning.helloworld;
 
-import com.qchery.rabbitlearning.RabbitConstants;
+import com.qchery.rabbitlearning.routing.DirectRoutingConstants;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,6 +11,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import static com.qchery.rabbitlearning.helloworld.HelloWorldConstants.TEST_HELLO_WORLD_QUEUE;
 import static com.qchery.rabbitlearning.helloworld.HelloWorldConstants.TEST_HELLO_WORLD_ROUTING_KEY;
+import static com.qchery.rabbitlearning.routing.DirectRoutingConstants.TEST_DIRECT_EXCHANGE;
 
 /**
  * @author Chery
@@ -42,11 +43,11 @@ public class HelloWorldTests {
 
     @Test
     public void sendHelloWorldUseDeclareExchange() {
-        DirectExchange directExchange = new DirectExchange(RabbitConstants.TEST_DIRECT_EXCHANGE, true, false);
+        DirectExchange directExchange = new DirectExchange(TEST_DIRECT_EXCHANGE, true, false);
         amqpAdmin.declareExchange(directExchange);
         amqpAdmin.declareBinding(BindingBuilder.bind(queue).to(directExchange).with(TEST_HELLO_WORLD_ROUTING_KEY));
         // 此处必须指定Exchange与RoutingKey，否则使用默认的Exchange无法指定需要发布消息到哪个队列
-        amqpTemplate.convertAndSend(RabbitConstants.TEST_DIRECT_EXCHANGE, TEST_HELLO_WORLD_ROUTING_KEY, "hello world with routingKey");
+        amqpTemplate.convertAndSend(TEST_DIRECT_EXCHANGE, TEST_HELLO_WORLD_ROUTING_KEY, "hello world with routingKey");
     }
 
     @Test

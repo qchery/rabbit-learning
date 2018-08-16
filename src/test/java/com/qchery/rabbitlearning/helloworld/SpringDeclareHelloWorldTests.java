@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import static com.qchery.rabbitlearning.RabbitConstants.TEST_DIRECT_EXCHANGE;
+import static com.qchery.rabbitlearning.routing.DirectRoutingConstants.TEST_DIRECT_EXCHANGE;
 import static com.qchery.rabbitlearning.helloworld.HelloWorldConstants.TEST_HELLO_WORLD_BEAN_ROUTING_KEY;
 
 /**

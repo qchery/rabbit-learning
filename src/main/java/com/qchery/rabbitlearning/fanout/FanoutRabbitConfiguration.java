@@ -19,16 +19,16 @@ public class FanoutRabbitConfiguration {
      * 声明输出到控制台的队列
      */
     @Bean
-    public Queue declareConsoleQueue(){
-        return QueueBuilder.nonDurable(FANOUT_LOGS_CONSOLE_QUEUE).autoDelete().build();
+    public Queue fanoutConsoleQueue(){
+        return QueueBuilder.durable(FANOUT_LOGS_CONSOLE_QUEUE).build();
     }
 
     /**
      * 声明输出到文件的队列
      */
     @Bean
-    public Queue declareFileQueue() {
-        return QueueBuilder.nonDurable(FANOUT_LOGS_FILE_QUEUE).autoDelete().build();
+    public Queue fanoutFileQueue() {
+        return QueueBuilder.durable(FANOUT_LOGS_FILE_QUEUE).build();
     }
 
     /**
@@ -36,18 +36,18 @@ public class FanoutRabbitConfiguration {
      * 当发布一条新消息时，会广播到所有绑定到该Exchange的队列中去，不使用RoutingKey
      */
     @Bean
-    public Exchange declareExchange() {
-        return ExchangeBuilder.fanoutExchange(FANOUT_LOGS_EXCHANGE).durable(false).build();
+    public Exchange fanoutExchange() {
+        return ExchangeBuilder.fanoutExchange(FANOUT_LOGS_EXCHANGE).build();
     }
 
     @Bean
-    public Binding declareConsoleBinding() {
-        return BindingBuilder.bind(declareConsoleQueue()).to(declareExchange()).with("").noargs();
+    public Binding fanoutConsoleBinding() {
+        return BindingBuilder.bind(fanoutConsoleQueue()).to(fanoutExchange()).with("").noargs();
     }
 
     @Bean
-    public Binding declareFileBinding(){
-        return BindingBuilder.bind(declareFileQueue()).to(declareExchange()).with("").noargs();
+    public Binding fileBinding(){
+        return BindingBuilder.bind(fanoutFileQueue()).to(fanoutExchange()).with("").noargs();
     }
 
 }

@@ -24,17 +24,12 @@ public class FanoutExchangeTests {
     private AmqpTemplate amqpTemplate;
 
     @Test
-    public void testFanout() {
-        for (int i = 0; i < 10; i++) {
+    public void testFanout() throws InterruptedException {
+        for (int i = 0; i < 3; i++) {
             amqpTemplate.convertAndSend(FANOUT_LOGS_EXCHANGE, EVERY_THING_NOT_EQUALS_BLANK_STRING, RandomStringUtils.randomAlphanumeric(5));
         }
-
-        try {
-            // 睡眠10秒等待消息被消费
-            Thread.sleep(10000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        // 睡眠等待消息被消费
+        Thread.sleep(3000);
     }
 
 }
