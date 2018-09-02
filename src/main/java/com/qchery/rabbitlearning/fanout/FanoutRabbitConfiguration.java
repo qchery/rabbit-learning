@@ -46,7 +46,7 @@ public class FanoutRabbitConfiguration {
     }
 
     @Bean
-    public Binding fileBinding(){
+    public Binding fanoutFileBinding(){
         return BindingBuilder.bind(fanoutFileQueue()).to(fanoutExchange()).with("").noargs();
     }
 
